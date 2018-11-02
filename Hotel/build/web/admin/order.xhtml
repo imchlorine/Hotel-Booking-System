@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+    <ui:composition template="adminLTE.xhtml">
+        <ui:define name="body">
+            <!-- Main content -->
+            <!-- /.content -->
+            <section class="content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <div class="box-header">
+                                <h2 class="box-title">Order</h2>
+                            </div>
+                            <div class="box-body">
+                                <h:form id="userbtnForm" style="margin-bottom: 10px">
+                                    <b:button look="primary" size="xs" value="Add New" class="right" style="margin-left: 5px" onclick="$('.addUserModalClass').modal('show');"/>
+                                    <b:button  value="view" look="primary" size="xs" style="margin-left: 5px" disabled="#{userManageBean.selectOne}" onclick="$('.editUserModalClass').modal('show')"/>
+                                    <b:button  value="delete" look="primary" size="xs" style="margin-left: 5px" disabled="#{userManageBean.selectOne}" onclick="$('.deleteUserModalClass').modal('show')"/>
+                                </h:form>
+                                <h:form>
+                                    <b:dataTable value="#{transactionManageBean.displayTransaction()}"
+                                                 var="order"
+                                                 searching="false"
+                                                 border="false"
+                                                 select="true"
+                                                 selectionMode="multiple"
+                                                 selectedRow="true"
+                                                 striped="false"
+                                                 >
+                                        <b:dataTableColumn value="#{order.user.firstName} #{order.user.lastName}" label="Customer Name"/>
+                                        <b:dataTableColumn value="#{order.user.email}" label="Customer email"/>
+                                        <b:dataTableColumn value="#{order.startDate}" label="Check In"/>
+                                        <b:dataTableColumn value="#{order.endDate}" label="Check Out"/>
+                                        <b:dataTableColumn value="#{order.status}" label="Status"/>
+                                        <b:dataTableColumn value="#{order.rooms.roomDesc}" label="Room"/>
+                                        <b:dataTableColumn value="#{order.transNo}" label="Trans No"/>
+                                    </b:dataTable>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </ui:define>
+    </ui:composition>
+</html>
+

@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui">
+    <ui:composition template="template.xhtml">
+        <ui:define name="body">
+            <!-- Main content -->
+            <!-- /.content -->
+            <section class="content">
+                <div class="row">
+                    <!-- left column -->
+                    <b:form role="form" id="editProfileForm">
+                        <b:growl id="updateinfo"/>
+                        <div class="col-md-6">
+                            <!-- general form elements -->
+                            <div class="box box-primary">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Personal info</h3>
+
+                                    <span class="pull-right-container">
+                                        <small class="label pull-right bg-green">#{userManageBean.userProfile.userType}</small>
+                                    </span>
+                                </div>
+
+                                <div class="box-body">
+                                    <div class="form-group">
+                                        <label for="">User Name*</label>
+                                        <b:inputText  class="form-control" value = "#{userManageBean.userProfile.username}" readonly="true"/> 
+                                    </div>
+                                    <div class="form-group col-md-6" style="padding-left: 0">
+                                        <label for="">First Name</label>
+                                        <b:inputText  class="form-control" value = "#{userManageBean.userProfile.firstName}" /> 
+                                    </div>
+                                    <div class="form-group col-md-6" style="padding-right: 0">
+                                        <label for="">last Name</label>
+                                        <b:inputText  class="form-control" value = "#{userManageBean.userProfile.lastName}" /> 
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Email*</label>
+                                        <b:inputText  class="form-control" value = "#{userManageBean.userProfile.email}" /> 
+                                    </div>
+                                    <div class="form-group" >
+                                        <label for="">Password*</label>
+                                        <b:inputSecret class="form-control" value = "#{userManageBean.userProfile.password}" required="true" requiredMessage="Password can not be none!">
+                                            <!--<f:validateRegex pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})" />-->
+                                        </b:inputSecret>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Phone</label>
+                                        <b:inputText  class="form-control" value = "#{userManageBean.userProfile.phone}" /> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- general form elements -->
+                            <div class="box box-primary">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Address</h3>
+                                </div>
+                                <!-- /.box-header -->
+                                <!-- form start -->
+                                <div class="box-body">
+                                    <div class="form-group">
+                                        <label for="">Country</label>
+                                        <b:inputText  class="form-control" value = "#{userManageBean.userProfile.country}" /> 
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">City</label>
+                                        <b:inputText  class="form-control" value = "#{userManageBean.userProfile.city}" /> 
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Street</label>
+                                        <b:inputText  class="form-control" value = "#{userManageBean.userProfile.street}" /> 
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Postcode</label>
+                                        <b:inputText  class="form-control" value = "#{userManageBean.userProfile.postCode}" /> 
+                                    </div>
+                                    <div class="form-group">
+                                        <b:commandButton type="submit" class="btn btn-info pull-right" value="Update" action="#{userManageBean.editProfile()}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </b:form>
+                </div>
+            </section>
+        </ui:define>
+    </ui:composition>
+</html>

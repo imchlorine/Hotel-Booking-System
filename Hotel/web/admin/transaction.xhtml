@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+    <ui:composition template="adminLTE.xhtml">
+        <ui:define name="body">
+            <!-- Main content -->
+            <!-- /.content -->
+            <section class="content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <div class="box-header">
+                                <h4 class="box-title">Transactions</h4>
+                            </div>
+                            <div class="box-body">
+                                <h:form role="form">
+                                    <div class="box-body">      
+                                        <div class="form-group col-xs-3">
+                                            <label>Transaction No</label>
+                                            <h:inputText class="form-control reset" value = "#{transactionManageBean.transaction.transNo}" />                                    
+                                        </div>
+                                        <div class="form-group col-xs-3">
+                                            <label>Transaction Name</label>
+                                            <h:inputText id="transactionName" class="form-control reset" value = "#{transactionManageBean.transaction.transName}" />                                     
+                                        </div>
+                                        <div class="form-group col-xs-3">
+                                            <label>Transaction Type</label>
+                                            <b:selectOneMenu class="form-control resetMenu" id="type" value="#{transactionManageBean.transTypeId}"
+                                                             style="height: 34px">
+                                                <f:selectItem value="#{null}" itemLabel="--select--"
+                                                              />
+                                                <f:selectItems value="#{transactionManageBean.selectTypes()}"
+                                                               var="transType"
+                                                               itemValue="#{transType.typeId}"
+                                                               itemLabel="#{transType.typeName}"
+                                                               />
+                                            </b:selectOneMenu>  
+                                        </div>
+                                        <h:commandButton  class="btn btn-primary" value = "Search" actionListener = "#{transactionManageBean.displayTransaction()}"  style="margin-top: 25px">
+                                        </h:commandButton>
+                                        <h:commandButton  class="btn btn-primary" value = "Reset" actionListener = "#{transactionManageBean.clear()}"  style="margin-left: 10px;margin-top: 25px">
+                                        </h:commandButton>
+                                    </div>
+                                </h:form>
+                                <h:form id="transbtnForm" style="margin-bottom: 10px">
+                                    <b:button look="primary" size="xs" value="Add New" class="right" style="margin-left: 5px" onclick="$('.addTransactionModalClass').modal('show');"/>
+                                    <b:button  value="view" look="primary" size="xs" style="margin-left: 5px" disabled="#{transactionManageBean.selectOne}" onclick="$('.editTransactionModalClass').modal('show')"/>
+                                    <b:button  value="delete" look="primary" size="xs" style="margin-left: 5px" disabled="#{transactionManageBean.selectOne}" onclick="$('.deleteTransactionModalClass').modal('show')"/>
+
+                                </h:form>
+                                <h:form>
+                                    <b:dataTable value="#{transactionManageBean.displayTransaction()}"
+                                                 var="transaction"
+                                                 searching="false"
+                                                 onselect="ajax:transactionManageBean.onSelect(transaction)"
+                                                 ondeselect="ajax:transactionManageBean.onDeselect(transaction)"
+                                                 border="false"
+                                                 select="true"
+                                                 selectionMode="multiple"
+                                                 selectedRow="true"
+                                                 striped="false"
+                                                 update="editTransactionForm transbtnForm deleteTransactionForm"
+                                                 >
+                                        <b:dataTableColumn value="#{transaction.transNo}" label="Trans No" order="desc"/>
+                                        <b:dataTableColumn value="#{transaction.transName}" />
+                                        <b:dataTableColumn value="#{transaction.transType.typeName}" />
+                                        <b:dataTableColumn value="#{transaction.user.username}" />
+                                    </b:dataTable>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <b:modal id="add-transaction" title="Add Transaction" styleClass="addTransactionModalClass"
+                     closable="false"
+                     closeOnEscape="true">
+                <h:form id="addTransactionForm" role="form">
+                    <div class="box-body">                               
+                        <div class="form-group">
+                            <label for="">Transaction Name</label>
+                            <h:inputText class="form-control" value = "#{transactionManageBean.transaction.transName}" />                                    
+                        </div>
+                        <div class="form-group">
+                            <label for="">Transaction Desc</label>
+                            <h:inputText class="form-control" value = "#{transactionManageBean.transaction.transDesc}" />                                     
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                        <h:commandButton class="btn btn-primary" value = "Save" actionListener = "#{transactionManageBean.addTransaction}"/>
+                    </div>
+                </h:form>
+            </b:modal>
+
+            <b:modal id="edit-transaction" title="View Transaction" styleClass="editTransactionModalClass"
+                     closable="false"
+                     closeOnEscape="true">
+                <h:form id="editTransactionForm" role="form">
+                    <div class="box-body">  
+                        <div class="form-group">
+                            <label for="">Transaction No</label>
+                            <h:inputText class="form-control" value = "#{transactionManageBean.select.transNo}" readonly="true" />                                    
+                        </div>
+                        <div class="form-group">
+                            <label for="">Transaction Name</label>
+                            <h:inputText class="form-control" value = "#{transactionManageBean.select.transName}" />                                    
+                        </div>
+                        <div class="form-group">
+                            <label for="">Transaction Type</label>
+                            <h:inputText class="form-control" value = "#{transactionManageBean.select.transType.typeName}" />                                     
+                        </div>
+                        <div class="form-group">
+                            <label for="">Transaction Desc</label>
+                            <h:inputText class="form-control" value = "#{transactionManageBean.select.transDesc}" />                                     
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    </div>
+                </h:form>
+            </b:modal>
+
+            <b:modal id="delete-transaction" title="Delete" styleClass="deleteTransactionModalClass"
+                     closable="false"
+                     closeOnEscape="true">
+                <h:form id="deleteTransactionForm" role="form">
+                    <div class="box-body">  
+                        Are you Sure to delete #{transactionManageBean.select} ?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                        <b:commandButton value="delete" look="primary" style="margin-left: 5px"  action ="#{transactionManageBean.deleteTransaction()}"></b:commandButton>
+                    </div>
+                </h:form>
+            </b:modal>
+        </ui:define>
+    </ui:composition>
+</html>
+

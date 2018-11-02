@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="template.xhtml">
+        <ui:define name="body">
+            <div class="box box-primary" style="width: 100%;margin: 20px auto">
+                <!-- /.box-body -->
+                <h:form id="addOrderForm" role="form">
+                    <div class="box-body">  
+                        <div class="form-group col-md-6">
+                            <label for="">Check in</label>
+                            <b:dateTimePicker id="checkin" value="#{transactionManageBean.transaction.startDate}" show-time="false" format="DD/MM/YYYY"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="">Check out</label>
+                            <b:dateTimePicker id="checkout" value="#{transactionManageBean.transaction.endDate}" show-time="false" format="DD/MM/YYYY"/>
+                        </div><!--
+                        <div class="form-group col-md-6">
+                            <label for="">Room ID</label>
+                            <h:inputText class="form-control" value = "#{transactionManageBean.transaction.rooms.roomId}" readonly="true"/>                                     
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="">Room Price</label>
+                            <h:inputText class="form-control" value = "#{transactionManageBean.transaction.rooms.price}" readonly="true"/>                                     
+                        </div>-->
+                        <div class="form-group col-md-6">
+                            <label>Transaction Type</label>
+                            <b:selectOneMenu class="form-control resetMenu" id="type" value="#{transactionManageBean.transTypeId}"
+                                             style="height: 34px">
+                                <f:selectItem value="#{null}" itemLabel="--select--"
+                                              />
+                                <f:selectItems value="#{transactionManageBean.selectTypes()}"
+                                               var="transType"
+                                               itemValue="#{transType.typeId}"
+                                               itemLabel="#{transType.typeName}"
+                                               />
+                            </b:selectOneMenu>  
+
+                        </div>
+                        <div class="form-group col-xs-6">
+                            <label>Room Type</label>
+                            <b:selectOneMenu class="form-control resetMenu" id="roomtype" value="#{transactionManageBean.roomTypeId}"
+                                             style="height: 34px">
+                                <f:selectItem itemLabel="--select--" itemValue="0" />
+                                <f:selectItems value="#{roomManageBean.selectRoomTypes()}"
+                                               var="roomType"
+                                               itemValue="#{roomType.typeId}"
+                                               itemLabel="#{roomType.typeName}"
+                                               />
+                            </b:selectOneMenu>  
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <h:commandButton class="btn btn-primary pull-right" value = "Pay" actionListener = "#{transactionManageBean.addTransaction()}"/>
+                    </div>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
+

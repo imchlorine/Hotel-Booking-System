@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+    <ui:composition template="adminLTE.xhtml">
+        <ui:define name="body">
+            <!-- Main content -->
+            <!-- /.content -->
+            <section class="content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <div class="box-header">
+                                <h2 class="box-title">User</h2>
+                            </div>
+                            <div class="box-body">
+                                <b:form role="form">
+                                    <div class="box-body">
+                                        <b:growl id="info" />
+                                        <div class="form-group col-xs-1">
+                                            <label>User ID</label>
+                                            <h:inputText id="userid"  class="form-control" value = "#{userManageBean.search.userId}" />                                    
+                                        </div>
+                                        <div class="form-group col-xs-2">
+                                            <label>First Name</label>
+                                            <h:inputText id="firstName" class="form-control" value = "#{userManageBean.search.firstName}" />                                     
+                                        </div>
+                                        <div class="form-group col-xs-2">
+                                            <label>Last Name</label>
+                                            <h:inputText id="lastName" class="form-control" value = "#{userManageBean.search.lastName}" />                                     
+                                        </div>
+                                        <div class="form-group col-xs-2">
+                                            <label>Email</label>
+                                            <h:inputText id="email" class="form-control" value = "#{userManageBean.search.email}" />                                     
+                                        </div>
+                                        <div class="form-group col-xs-1">
+                                            <label>Postcode</label>
+                                            <h:inputText id="postcode" class="form-control" value = "#{userManageBean.search.postCode}" />                                     
+                                        </div>
+                                        <div class="form-group col-xs-2">
+                                            <label>Role</label>
+                                            <h:selectOneMenu class="form-control" id="role" value="#{userManageBean.search.userType}" style="height: 34px">
+                                                <f:selectItem itemValue="" itemLabel="--select--" />
+                                                <f:selectItem itemValue="admin" itemLabel="admin" />
+                                                <f:selectItem itemValue="customer" itemLabel="customer" />
+                                            </h:selectOneMenu>  
+                                        </div>
+                                        <h:commandButton  class="btn btn-primary" value = "Search" actionListener = "#{userManageBean.displayUsers()}"  style="margin-top: 25px">
+                                        </h:commandButton>
+                                        <h:commandButton  class="btn btn-primary" value = "Reset" actionListener = "#{userManageBean.clear()}"  style="margin-left: 10px;margin-top: 25px">
+                                        </h:commandButton>
+                                    </div>
+                                    </b:form>
+                                    <b:form id="userbtnForm" style="margin-bottom: 10px">
+                                        <b:button look="primary" size="xs" value="Add New" class="right" style="margin-left: 5px" href="addUser.xhtml"/>
+                                        <b:button  value="view" look="primary" size="xs" style="margin-left: 5px" disabled="#{userManageBean.selectOne}" href="editUser.xhtml"/>
+                                        <b:button  value="delete" look="primary" size="xs" style="margin-left: 5px" disabled="#{userManageBean.selectOne}" onclick="$('.deleteUserModalClass').modal('show')"/>
+                                    </b:form>
+                                    <b:form>
+                                        <b:dataTable value="#{userManageBean.displayUsers()}"
+                                                     var="user"
+                                                     searching="false"
+                                                     onselect="ajax:userManageBean.onSelect(user);"
+                                                     ondeselect="ajax:userManageBean.onDeselect(user);"
+                                                     border="false"
+                                                     select="true"
+                                                     selectionMode="multiple"
+                                                     selectedRow="true"
+                                                     striped="false"
+                                                     update="userbtnForm editUserForm deleteUserForm"
+                                                     >
+                                            <b:dataTableColumn value="#{user.userId}" label="User ID" order="desc"/>
+                                            <b:dataTableColumn value="#{user.username}" label="Username"/>
+                                            <b:dataTableColumn value="#{user.firstName} #{user.lastName}" label="Name"/>
+                                            <b:dataTableColumn value="#{user.email}"/>
+                                            <b:dataTableColumn value="#{user.userType}" label="User Type"/>
+                                        </b:dataTable>
+                                </b:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+            <div hidden="true">
+                <b:form id="editUserForm" role="form" >
+                    <div class="box-body">  
+                        <div class="form-group col-xs-6">
+                            <label for="">First Name</label>
+                            <h:inputText class="form-control" value = "#{userManageBean.selected.firstName}" required="true"/>                                    
+                        </div>
+                        <div class="form-group col-xs-6">
+                            <label for="">Last Name</label>
+                            <h:inputText class="form-control" value = "#{userManageBean.selected.lastName}" required="true"/>                                    
+                        </div>
+                        <div class="form-group col-xs-6">
+                            <label for="">Phone</label>
+                            <h:inputText class="form-control" value = "#{userManageBean.selected.phone}" required="true"/>                                     
+                        </div>
+                        <div class="form-group col-xs-6">
+                            <label for="">Email</label>
+                            <h:inputText class="form-control" value = "#{userManageBean.selected.email}" required="true"/>                                     
+                        </div>
+                        <div class="form-group col-xs-6">
+                            <label>Role</label>
+                            <h:selectOneMenu class="form-control" id="role" value="#{userManageBean.selected.userType}" style="height: 34px">
+                                <f:selectItem itemValue="" itemLabel="--select--" />
+                                <f:selectItem itemValue="admin" itemLabel="admin" />
+                                <f:selectItem itemValue="customer" itemLabel="customer" />
+                            </h:selectOneMenu>  
+                        </div>
+                    </div>
+                </b:form>
+            </div>
+            <b:modal id="delete-user" title="Delete" styleClass="deleteUserModalClass"
+                     closable="false"
+                     closeOnEscape="true">
+                <h:form id="deleteUserForm" role="form">
+                    <div class="box-body">  
+                        The related Transaction also will be deleted, Are you Sure to delete #{userManageBean.selected}?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                        <b:commandButton value="delete" look="primary" style="margin-left: 5px" actionListener="#{userManageBean.removeUser()}"></b:commandButton>
+                    </div>
+                </h:form>
+            </b:modal>
+        </ui:define>
+    </ui:composition>
+</html>
+

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="AdminLTE.min.css"/>
+        <link rel="stylesheet" href="resources/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+    </h:head>
+    <h:body>
+        <div class="register-box">
+            <div class="register-logo">
+                <a href="/Hotel"><b>Holiday</b>Booking</a>
+            </div>
+
+            <div class="register-box-body">
+                <p class="login-box-msg">Register a new membership</p>
+                <h:form role="form">
+                    <div class="form-group has-feedback">
+                        <b:inputText id="username" class="form-control" placeholder="User name" value = "#{userManageBean.user.username}" 
+                                     requiredMessage="username can not be none!" required="true"> 
+                        </b:inputText>
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <b:inputText  class="form-control" placeholder="Email" value = "#{userManageBean.user.email}" required="true" 
+                                      requiredMessage="Email can not be none!">  
+                        </b:inputText>
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <b:inputSecret class="form-control"  placeholder="Password" value = "#{userManageBean.user.password}" required="true" requiredMessage="Password can not be none!">
+                        </b:inputSecret>
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4 pull-right">
+                            <b:commandButton value = "Register"  class="btn btn-primary" action = "#{userManageBean.register()}">
+                            </b:commandButton>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </h:form>
+                <a href="login.xhtml" class="text-center">I already have a membership</a>
+            </div>
+            <!-- /.form-box -->
+        </div>
+    </h:body>
+</html>
